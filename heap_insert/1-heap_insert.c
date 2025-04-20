@@ -12,8 +12,8 @@
  */
 void enqueue(heap_t **queue, heap_t *node, int *rear)
 {
-    queue[*rear] = node;
-    (*rear)++;
+	queue[*rear] = node;
+	(*rear)++;
 }
 
 /**
@@ -26,8 +26,8 @@ void enqueue(heap_t **queue, heap_t *node, int *rear)
  */
 heap_t *dequeue(heap_t **queue, int *front)
 {
-    (*front)++;
-    return (queue[*front - 1]);
+	(*front)++;
+	return (queue[*front - 1]);
 }
 
 /**
@@ -40,19 +40,19 @@ heap_t *dequeue(heap_t **queue, int *front)
  */
 heap_t *heapify_up(heap_t *node)
 {
-    while (node->parent && node->n > node->parent->n)
-    {
-        /* Swap values */
-        int temp = node->n;
+	while (node->parent && node->n > node->parent->n)
+	{
+		/* Swap values */
+		int temp = node->n;
 
-        node->n = node->parent->n;
-        node->parent->n = temp;
+		node->n = node->parent->n;
+		node->parent->n = temp;
 
-        /* Move up the tree */
-        node = node->parent;
-    }
+		/* Move up the tree */
+		node = node->parent;
+	}
 
-    return (node);
+	return (node);
 }
 
 /**
@@ -68,45 +68,45 @@ heap_t *heapify_up(heap_t *node)
  */
 heap_t *heap_insert(heap_t **root, int value)
 {
-    heap_t *new_node = NULL;
-    heap_t *temp;
-    heap_t *queue[1024]; /* BFS queue implementation */
-    int front = 0, rear = 0;
+	heap_t *new_node = NULL;
+	heap_t *temp;
+	heap_t *queue[1024]; /* BFS queue implementation */
+	int front = 0, rear = 0;
 
-    if (!root)
-        return (NULL);
+	if (!root)
+		return (NULL);
 
-    /* Root initialization for empty heap */
-    if (!*root)
-        return (*root = binary_tree_node(NULL, value));
+	/* Root initialization for empty heap */
+	if (!*root)
+		return (*root = binary_tree_node(NULL, value));
 
-    /* Systematic level-by-level traversal */
-    enqueue(queue, *root, &rear);
+	/* Systematic level-by-level traversal */
+	enqueue(queue, *root, &rear);
 
-    while (front < rear)
-    {
-        temp = dequeue(queue, &front);
+	while (front < rear)
+	{
+		temp = dequeue(queue, &front);
 
-        /* Target location identification and node placement */
-        if (!temp->left)
-        {
-            temp->left = binary_tree_node(temp, value);
-            new_node = temp->left;
-            break;
-        }
+		/* Target location identification and node placement */
+		if (!temp->left)
+		{
+			temp->left = binary_tree_node(temp, value);
+			new_node = temp->left;
+			break;
+		}
 
-        enqueue(queue, temp->left, &rear);
+		enqueue(queue, temp->left, &rear);
 
-        if (!temp->right)
-        {
-            temp->right = binary_tree_node(temp, value);
-            new_node = temp->right;
-            break;
-        }
+		if (!temp->right)
+		{
+			temp->right = binary_tree_node(temp, value);
+			new_node = temp->right;
+			break;
+		}
 
-        enqueue(queue, temp->right, &rear);
-    }
+		enqueue(queue, temp->right, &rear);
+	}
 
-    /* Max-heap property restoration phase */
-    return (heapify_up(new_node));
+	/* Max-heap property restoration phase */
+	return (heapify_up(new_node));
 }
