@@ -1,11 +1,12 @@
-#ifndef _BINARY_TREES_H_
-#define _BINARY_TREES_H_
+#ifndef BINARY_TREES_H
+#define BINARY_TREES_H
 
 /* ===== Libraries ===== */
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 /* ===== Structures ===== */
 /**
@@ -30,8 +31,6 @@ typedef struct binary_tree_s heap_t;
 /* ===== Prototypes ===== */
 void binary_tree_print(const binary_tree_t *);
 binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
-size_t binary_tree_size(const heap_t *tree);
-void heapify_up(heap_t *node);
 heap_t *heap_insert(heap_t **root, int value);
 
 #endif /* _BINARY_TREES_H_ */
