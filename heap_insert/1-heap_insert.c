@@ -76,8 +76,7 @@ heap_t *heap_insert(heap_t **root, int value)
 	if (!root)
 		return (NULL);
 
-	/* Root initialization for empty heap */
-	if (!*root)
+	if (!*root) // root initialization for empty heap
 		return (*root = binary_tree_node(NULL, value));
 
 	/* Systematic level-by-level traversal */
