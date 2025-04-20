@@ -1,89 +1,112 @@
 #include "binary_trees.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 /**
- * swap - swpas values
- * @node1: first node.
- * @node2: second node.
+ * enqueue - Queue management: Addition operation
+ * @queue: Queue container (array of binary tree node pointers)
+ * @node: Target node for enqueueing
+ * @rear: Position tracker for back of queue
+ *
+ * Description: Handles the insertion of new nodes into the BFS queue
  */
-void swap(heap_t *node1, heap_t *node2)
+void enqueue(heap_t **queue, heap_t *node, int *rear)
 {
-    int temp = node1->n;
-
-    node1->n = node2->n;
-    node2->n = temp;
+    queue[*rear] = node;
+    (*rear)++;
 }
 
 /**
- * heapify - Max Heap property
- * @node: inserted node.
+ * dequeue - Queue management: Removal operation
+ * @queue: Queue container storing tree nodes
+ * @front: Position tracker for front of queue
  *
- * Return: pointer to inserted node..
+ * Return: Returns node at queue front
+ * Description: Extracts and returns the next node in queue sequence
  */
-heap_t *heapify(heap_t *node)
+heap_t *dequeue(heap_t **queue, int *front)
+{
+    (*front)++;
+    return (queue[*front - 1]);
+}
+
+/**
+ * heapify_up - Max Heap Property Maintainer
+ * @node: Entry point node for upward propagation
+ *
+ * Return: Final resting position of processed node
+ * Description: Bubble-up operation to restore heap ordering after insertion.
+ *
+ */
+heap_t *heapify_up(heap_t *node)
 {
     while (node->parent && node->n > node->parent->n)
     {
-        swap(node, node->parent);
+        /* Swap values */
+        int temp = node->n;
+
+        node->n = node->parent->n;
+        node->parent->n = temp;
+
+        /* Move up the tree */
         node = node->parent;
     }
+
     return (node);
 }
 
 /**
- * insert - inserts node using recursion
- * @root: pointer to root node.
- * @value: value to be inserted.
+ * heap_insert - Max Binary Heap Insertion Handler
+ * @root: Access point to heap structure
+ * @value: Data to be incorporated into heap
  *
- * Return: pointer to inserted node.
- */
-heap_t *insert(heap_t *root, int value)
-{
-    if (!root)
-        return (binary_tree_node(NULL, value));
-
-    if (!root->left)
-    {
-        root->left = binary_tree_node(root, value);
-        return (root->left);
-    }
-    else if (!root->right)
-    {
-        root->right = binary_tree_node(root, value);
-        return (root->right);
-    }
-    else
-    {
-        heap_t *left_insert = insert(root->left, value);
-
-        if (left_insert)
-            return (left_insert);
-        return (insert(root->right, value));
-    }
-}
-
-/**
- * heap_insert - inserts value.
- * @root: double pointer to root node.
- * @value: value to be inserted
- * Return: pointer to inserted node, or NULL on failure.
+ * Return: Location of newly created node, NULL if operation fails
+ * Description: Master function orchestrating the complete insertion process:
+ *             1. Finds appropriate insertion point via level-order traversal
+ *             2. Creates new node at target location
+ *             3. Ensures max-heap property post-insertion
  */
 heap_t *heap_insert(heap_t **root, int value)
 {
-    heap_t *new_node;
+    heap_t *new_node = NULL;
+    heap_t *temp;
+    heap_t *queue[1024]; /* BFS queue implementation */
+    int front = 0, rear = 0;
 
     if (!root)
         return (NULL);
 
+    /* Root initialization for empty heap */
     if (!*root)
+        return (*root = binary_tree_node(NULL, value));
+
+    /* Systematic level-by-level traversal */
+    enqueue(queue, *root, &rear);
+
+    while (front < rear)
     {
-        *root = binary_tree_node(NULL, value);
-        return (*root);
+        temp = dequeue(queue, &front);
+
+        /* Target location identification and node placement */
+        if (!temp->left)
+        {
+            temp->left = binary_tree_node(temp, value);
+            new_node = temp->left;
+            break;
+        }
+
+        enqueue(queue, temp->left, &rear);
+
+        if (!temp->right)
+        {
+            temp->right = binary_tree_node(temp, value);
+            new_node = temp->right;
+            break;
+        }
+
+        enqueue(queue, temp->right, &rear);
     }
 
-    new_node = insert(*root, value);
-
-    if (!new_node)
-        return (NULL);
-
-    return (heapify(new_node));
+    /* Max-heap property restoration phase */
+    return (heapify_up(new_node));
 }
