@@ -3,6 +3,7 @@
 Minimum Operations
 """
 
+
 def minOperations(n: int) -> int:
     """
     Method that calculates the fewest number of operations
@@ -17,7 +18,8 @@ def minOperations(n: int) -> int:
     Returns:
         int: The minimum number of operations required.
     """
-    # If n is less than or equal to 1, it's not possible to perform any operations
+    # If n is less than or equal to 1,
+    # it's not possible to perform any operations
     if n <= 1:
         return 0
 
@@ -28,18 +30,23 @@ def minOperations(n: int) -> int:
 
     # Continue until we've reduced n to 1 by dividing out all its factors
     while n > 1:
-        # If n is divisible by possibleFactor, then possibleFactor is a prime factor of n
+        # If n is divisible by possibleFactor,
+        # then possibleFactor is a prime factor of n
         if n % possibleFactor == 0:
-            # Divide n by this factor (simulating repeated "Paste" operations after a "Copy All")
+            # Divide n by this factor (simulating repeated "Paste"
+            # operations after a "Copy All")
             n = n / possibleFactor
             # Add the factor to the operation count
-            # (1 "Copy All" + (factor-1) "Paste" operations = factor operations)
+            # (1 "Copy All" + (factor-1)
+            # "Paste" operations = factor operations)
             operations += possibleFactor
         else:
-            # If not divisible, increment possibleFactor to check the next integer
+            # If not divisible, increment possibleFactor
+            # to check the next integer
             # (looking for the next possible factor)
             possibleFactor += 1
 
-    # After the loop, operations contains the sum of all prime factors of the original n
+    # After the loop, operations contains the sum
+    # of all prime factors of the original n
     # This is the minimum number of operations required
     return operations
