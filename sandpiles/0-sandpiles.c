@@ -1,17 +1,6 @@
 #include "sandpiles.h"
 
 /**
- * sandpiles_sum - Function that computes the sum of two sandpiles
- * @grid1: First sandpile
- * @grid2: Second sandpile
- *
- * Return: void
- */
-/*
- * Helper function to check if a sandpile is stable
- * Returns 1 if stable, 0 if unstable
- */
-/**
  * is_stable - Checks if a sandpile grid is stable
  * @grid: 3x3 sandpile grid to check
  *
@@ -33,9 +22,6 @@ static int is_stable(int grid[3][3])
 	}
 	return (1);
 }
-/*
- * Helper function to print a 3x3 grid
- */
 /**
  * print_grid - Prints a 3x3 sandpile grid
  * @grid: 3x3 grid to print
@@ -59,10 +45,6 @@ static void print_grid(int grid[3][3])
 	}
 }
 
-/*
- * Helper function to perform a single toppling round
- * Modifies grid1 in-place using a temporary grid
- */
 /**
  * topple - Performs a single toppling round on a sandpile grid
  * @grid1: 3x3 grid to topple (modified in-place)
