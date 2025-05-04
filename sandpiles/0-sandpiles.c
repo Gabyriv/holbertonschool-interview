@@ -21,6 +21,23 @@ static int is_stable(int grid[3][3])
     return 1;
 }
 /*
+ * Helper function to print a 3x3 grid
+ */
+static void print_grid(int grid[3][3])
+{
+    int i, j;
+    printf("=\n");
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++) {
+            if (j)
+                printf(" ");
+            printf("%d", grid[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+/*
  * Helper function to perform a single toppling round
  * Modifies grid1 in-place using a temporary grid
  */
