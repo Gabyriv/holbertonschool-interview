@@ -11,6 +11,12 @@
  * Helper function to check if a sandpile is stable
  * Returns 1 if stable, 0 if unstable
  */
+/**
+ * is_stable - Checks if a sandpile grid is stable
+ * @grid: 3x3 sandpile grid to check
+ *
+ * Return: 1 if stable (all cells <= 3), 0 if unstable
+ */
 static int is_stable(int grid[3][3])
 {
 	int i, j;
@@ -29,6 +35,10 @@ static int is_stable(int grid[3][3])
 }
 /*
  * Helper function to print a 3x3 grid
+ */
+/**
+ * print_grid - Prints a 3x3 sandpile grid
+ * @grid: 3x3 grid to print
  */
 static void print_grid(int grid[3][3])
 {
@@ -52,6 +62,10 @@ static void print_grid(int grid[3][3])
 /*
  * Helper function to perform a single toppling round
  * Modifies grid1 in-place using a temporary grid
+ */
+/**
+ * topple - Performs a single toppling round on a sandpile grid
+ * @grid1: 3x3 grid to topple (modified in-place)
  */
 static void topple(int grid1[3][3])
 {
