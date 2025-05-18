@@ -22,20 +22,20 @@ def main():
     line_count = 0
 
     try:
-        # Compile regex for log line format (allow optional whitespace at end)
-        log_pattern = re.compile(r'^(\S+) - \[([^\]]+)\] "([^"]+)" (\d{3}) (\d+)\s*$')
         for line in sys.stdin:
             line = line.strip()
-            match = log_pattern.match(line)
-            if not match:
-                continue  # Skip lines that don't match the format
-            ip_address, date, request, status_code, file_size = match.groups()
+            parts = line.split()
+            if len(parts) < 2:
+                continue  # Skip lines that don't have at least two fields
+            status_code = parts[-2]
+            file_size = parts[-1]
             line_count += 1
             try:
                 total_size += int(file_size)
-                code = int(status_code)
-                if code in status_codes:
-                    status_codes[code] += 1
+                if status_code.isdigit():
+                    code = int(status_code)
+                    if code in status_codes:
+                        status_codes[code] += 1
             except Exception:
                 pass  # Skip lines with invalid status code or file size
 
