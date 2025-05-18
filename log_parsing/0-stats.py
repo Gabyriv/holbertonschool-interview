@@ -22,8 +22,8 @@ def main():
     line_count = 0
 
     try:
-        # Compile regex for log line format
-        log_pattern = re.compile(r'^(\S+) - \[([^\]]+)\] "([^"]+)" (\d{3}) (\d+)$')
+        # Compile regex for log line format (allow optional whitespace at end)
+        log_pattern = re.compile(r'^(\S+) - \[([^\]]+)\] "([^"]+)" (\d{3}) (\d+)\s*$')
         for line in sys.stdin:
             line = line.strip()
             match = log_pattern.match(line)
