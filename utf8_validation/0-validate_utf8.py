@@ -51,4 +51,4 @@ def validUTF8(data):
         num_bytes -= 1
 
     # If we still have bytes to process, the sequence is incomplete
-    return num_bytes == 0 
+    return num_bytes == 0
