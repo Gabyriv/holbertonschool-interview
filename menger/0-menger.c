@@ -10,19 +10,15 @@
  */
 static int should_fill(int x, int y, int level)
 {
-    /* Base case: level 0 is always filled */
-    if (level == 0)
-        return (1);
+	if (level == 0)
+		return (1);
 
-    /* Calculate the size of the current level subdivision */
-    int size = (int)pow(3, level - 1);
+	int size = (int)pow(3, level - 1);
 
-    /* Check if position is in the center of the 3x3 grid */
-    if (x >= size && x < 2 * size && y >= size && y < 2 * size)
-        return (0); /* Center is always empty */
+	if (x >= size && x < 2 * size && y >= size && y < 2 * size)
+		return (0);
 
-    /* Recursively check the position in the next level down */
-    return (should_fill(x % size, y % size, level - 1));
+	return (should_fill(x % size, y % size, level - 1));
 }
 
 /**
@@ -36,27 +32,22 @@ static int should_fill(int x, int y, int level)
  */
 void menger(int level)
 {
-    int i, j, size;
+	int i, j, size;
 
-    /* Handle invalid level */
-    if (level < 0)
-        return;
+	if (level < 0)
+		return;
 
-    /* Calculate the total size of the sponge */
-    size = (int)pow(3, level);
+	size = (int)pow(3, level);
 
-    /* Iterate through each position in the grid */
-    for (i = 0; i < size; i++)
-    {
-        for (j = 0; j < size; j++)
-        {
-            /* Determine if this position should be filled */
-            if (should_fill(i, j, level))
-                printf("#");
-            else
-                printf(" ");
-        }
-        /* Move to next line after each row */
-        printf("\n");
-    }
+	for (i = 0; i < size; i++)
+	{
+		for (j = 0; j < size; j++)
+		{
+			if (should_fill(i, j, level))
+				printf("#");
+			else
+				printf(" ");
+		}
+		printf("\n");
+	}
 }
