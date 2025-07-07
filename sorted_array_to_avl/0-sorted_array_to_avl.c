@@ -3,7 +3,6 @@
 
 /**
  * create_avl_node - Creates a new AVL tree node
- *
  * @parent: Pointer to the parent node
  * @value: Value to store in the node
  *
@@ -27,7 +26,6 @@ static avl_t *create_avl_node(avl_t *parent, int value)
 
 /**
  * build_avl_from_sorted - Recursively builds AVL tree from sorted array
- *
  * @array: Pointer to the sorted array
  * @start: Starting index of the current subarray
  * @end: Ending index of the current subarray
@@ -75,7 +73,6 @@ static avl_t *build_avl_from_sorted(int *array, int start, int end, avl_t *paren
 
 /**
  * sorted_array_to_avl - Builds an AVL tree from a sorted array
- *
  * @array: Pointer to the first element of the array to be converted
  * @size: Number of elements in the array
  *
