@@ -9,63 +9,63 @@
  */
 skiplist_t *linear_skip(skiplist_t *list, int value)
 {
-    skiplist_t *current, *prev;
+	skiplist_t *current, *prev;
 
-    /* Check if list is NULL */
-    if (list == NULL)
-        return (NULL);
+	/* Check if list is NULL */
+	if (list == NULL)
+		return (NULL);
 
-    /* Start with the head of the list */
-    current = list;
-    prev = NULL;
+	/* Start with the first express node if it exists */
+	current = list->express;
+	prev = list;
 
-    /* Use express lane to find the range where value might be */
-    while (current->express != NULL)
-    {
-        printf("Value checked at index [%lu] = [%d]\n",
-               current->index, current->n);
+	/* Use express lane to find the range where value might be */
+	while (current != NULL && current->express != NULL)
+	{
+		printf("Value checked at index [%lu] = [%d]\n",
+		       current->index, current->n);
 
-        /* If current express node value is >= search value, stop here */
-        if (current->n >= value)
-        {
-            printf("Value found between indexes [%lu] and [%lu]\n",
-                   prev ? prev->index : 0, current->index);
-            break;
-        }
+		/* If current express node value is >= search value, stop here */
+		if (current->n >= value)
+		{
+			printf("Value found between indexes [%lu] and [%lu]\n",
+			       prev->index, current->index);
+			break;
+		}
 
-        prev = current;
-        current = current->express;
-    }
+		prev = current;
+		current = current->express;
+	}
 
-    /* If we reached the end of express lane, continue to the end of list */
-    if (current->express == NULL)
-    {
-        printf("Value checked at index [%lu] = [%d]\n",
-               current->index, current->n);
-        printf("Value found between indexes [%lu] and [%lu]\n",
-               prev ? prev->index : 0, current->index);
-    }
+	/* If we reached the end of express lane, continue to the end of list */
+	if (current != NULL && current->express == NULL)
+	{
+		printf("Value checked at index [%lu] = [%d]\n",
+		       current->index, current->n);
+		printf("Value found between indexes [%lu] and [%lu]\n",
+		       prev->index, current->index);
+	}
 
-    /* If we found a value >= search value in express lane, search backwards */
-    if (current->n >= value && prev != NULL)
-    {
-        current = prev;
-    }
+	/* If we found a value >= search value in express lane, search backwards */
+	if (current != NULL && current->n >= value && prev != NULL)
+	{
+		current = prev;
+	}
 
-    /* Search linearly from current position */
-    while (current != NULL)
-    {
-        printf("Value checked at index [%lu] = [%d]\n",
-               current->index, current->n);
+	/* Search linearly from current position */
+	while (current != NULL)
+	{
+		printf("Value checked at index [%lu] = [%d]\n",
+		       current->index, current->n);
 
-        if (current->n == value)
-            return (current);
+		if (current->n == value)
+			return (current);
 
-        if (current->n > value)
-            break;
+		if (current->n > value)
+			break;
 
-        current = current->next;
-    }
+		current = current->next;
+	}
 
-    return (NULL);
+	return (NULL);
 }
