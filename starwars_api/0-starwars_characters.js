@@ -1,5 +1,5 @@
 #!/usr/bin/node
-import request from 'request';
+const request = require('request');
 
 /*
     This script prints all characters of a Star Wars movie:

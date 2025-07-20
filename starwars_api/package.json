@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "dependencies": {
     "semistandard": "^17.0.0"
   }
