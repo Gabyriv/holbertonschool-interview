@@ -53,6 +53,14 @@ static int advanced_binary_recursive(int *array, size_t left,
 
 	print_subarray(array, left, right);
 
+	/* Base case: single element range after printing */
+	if (left == right)
+	{
+		if (array[left] == value)
+			return ((int)left);
+		return (-1);
+	}
+
 	mid = left + (right - left) / 2;
 
 	if (array[mid] == value)
@@ -65,9 +73,8 @@ static int advanced_binary_recursive(int *array, size_t left,
 
 	if (array[mid] > value)
 	{
-		if (mid == 0)
-			return (-1);
-		return (advanced_binary_recursive(array, left, mid - 1, value));
+		/* Search left half including mid to match expected prints */
+		return (advanced_binary_recursive(array, left, mid, value));
 	}
 
 	/* array[mid] < value */
