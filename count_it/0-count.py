@@ -101,4 +101,3 @@ def count_words(subreddit, word_list, after=None, counts=None, targets=None):
 
     for word, total in results:
         print('{}: {}'.format(word, total))
-
