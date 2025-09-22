@@ -1,11 +1,11 @@
-/*
- * File: sort.h
- * Description: Header file for merge sort project. Contains function
- * prototypes and required includes. Follows Holberton/Betty style.
- */
-
 #ifndef SORT_H
 #define SORT_H
+
+/*
+ * File: sort.h
+ * Description: Header file for merge sort project.
+ * Contains function prototypes and required includes.
+ */
 
 #include <stddef.h>
 
@@ -25,4 +25,3 @@ void print_array(const int *array, size_t size);
 void merge_sort(int *array, size_t size);
 
 #endif /* SORT_H */
-
