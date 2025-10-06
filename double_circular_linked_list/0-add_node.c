@@ -62,7 +62,7 @@ List *add_node_begin(List **list, char *str)
 	if (node == NULL)
 		return (NULL);
 
-	/* 
+	/*
 	* If list was empty, *list already points to node. Otherwise,
 	* move head to the new node we added at the end (which becomes new head).
 	*/
