@@ -47,9 +47,5 @@ int wildcmp(char *s1, char *s2)
 		return (0);
 	}
 
-	/*
-     * Unreachable in practice due to earlier returns
-     * but keeps structure clear
-     */
 	return (0);
 }
