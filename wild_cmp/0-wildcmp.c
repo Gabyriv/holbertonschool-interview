@@ -13,7 +13,8 @@ int wildcmp(char *s1, char *s2)
 	if (*s1 == '\0' && *s2 == '\0')
 		return (1);
 
-	/* If current chars match or s2 has '?'-like equality (not allowed here),
+	/* 
+     * If current chars match or s2 has '?'-like equality (not allowed here),
 	 * we only support '*' as wildcard per requirements.
 	 */
 	if (*s2 != '*')
@@ -24,7 +25,8 @@ int wildcmp(char *s1, char *s2)
 		return (0);
 	}
 
-	/* Now *s2 == '*' case:
+	/* 
+     * Now *s2 == '*' case:
 	 * Collapse consecutive '*' by advancing s2 over them recursively.
 	 */
 	if (*s2 == '*')
@@ -45,6 +47,9 @@ int wildcmp(char *s1, char *s2)
 		return (0);
 	}
 
-	/* Unreachable in practice due to earlier returns, but keeps structure clear */
+	/* 
+     * Unreachable in practice due to earlier returns
+     * but keeps structure clear 
+     */
 	return (0);
 }
