@@ -52,6 +52,39 @@ static int is_valid_substring(char const *s, int pos, char const **words,
 }
 
 /**
+ * scan_positions - Scan string for valid substring positions
+ * @s: the string to scan
+ * @words: array of words to find
+ * @nb_words: number of words
+ * @word_len: length of each word
+ * @total_len: total length of concatenated substring
+ * @s_len: length of string s
+ * @indices: array to store found indices
+ * @used: helper array to track used words
+ *
+ * Return: number of matches found
+ */
+static int scan_positions(char const *s, char const **words, int nb_words,
+						  int word_len, int total_len, int s_len,
+						  int *indices, int *used)
+{
+	int i, count;
+
+	count = 0;
+	/* Check each possible starting position */
+	for (i = 0; i <= s_len - total_len; i++)
+	{
+		if (is_valid_substring(s, i, words, nb_words, word_len, used))
+		{
+			indices[count] = i;
+			count++;
+		}
+	}
+
+	return (count);
+}
+
+/**
  * find_substring - Find all substrings that are concatenations of all words
  * @s: the string to scan
  * @words: array of words to find
@@ -63,31 +96,23 @@ static int is_valid_substring(char const *s, int pos, char const **words,
 int *find_substring(char const *s, char const **words, int nb_words, int *n)
 {
 	int *indices, *used;
-	int s_len, word_len, total_len;
-	int i, count;
+	int s_len, word_len, total_len, count;
 
-	/* Initialize return value */
 	*n = 0;
-
-	/* Handle edge cases */
 	if (!s || !words || nb_words == 0)
 		return (NULL);
 
-	/* Calculate lengths */
 	s_len = strlen(s);
 	word_len = strlen(words[0]);
 	total_len = word_len * nb_words;
 
-	/* If substring would be longer than s, no matches possible */
 	if (total_len > s_len)
 		return (NULL);
 
-	/* Allocate array to store indices (worst case: all positions match) */
 	indices = malloc(sizeof(int) * (s_len - total_len + 1));
 	if (!indices)
 		return (NULL);
 
-	/* Allocate helper array to track used words */
 	used = malloc(sizeof(int) * nb_words);
 	if (!used)
 	{
@@ -95,20 +120,10 @@ int *find_substring(char const *s, char const **words, int nb_words, int *n)
 		return (NULL);
 	}
 
-	/* Check each possible starting position */
-	count = 0;
-	for (i = 0; i <= s_len - total_len; i++)
-	{
-		if (is_valid_substring(s, i, words, nb_words, word_len, used))
-		{
-			indices[count] = i;
-			count++;
-		}
-	}
-
+	count = scan_positions(s, words, nb_words, word_len, total_len,
+						   s_len, indices, used);
 	free(used);
 
-	/* If no matches found, return NULL */
 	if (count == 0)
 	{
 		free(indices);
